@@ -14,7 +14,7 @@ req.body.forEach(element => {
   let response = null;
   for (var j = 0; j <  geof.features.length && !response; j++) {
     var placeTwo = productLists[j]; 
-    var conflict = turf.booleanIntersects(placeOne, parcel2);
+    var conflict = turf.booleanIntersects(placeOne, placeTwo);
     if (conflict) {
       response = placeTwo.properties;
       re.push(response);
