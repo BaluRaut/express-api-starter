@@ -1,17 +1,32 @@
 const express = require('express');
 
 const emojis = require('./emojis');
-var turf = require('@turf/boolean-intersects');
-const geof = require("../foo.");
+var turf = require('@turf/turf');
+const geof = require("../geojson");
 const router = express.Router();
+router.post('/', (req, res) => {
+  const re = [];
+  const productLists = geof.features;
+console.log(req.body);
+req.body.forEach(element => {
+  console.log(element);
+  var placeOne = turf.point([Number(element[1].toFixed(2)),Number(element[0].toFixed(2))]);
+  let response = null;
+  for (var j = 0; j <  geof.features.length && !response; j++) {
+    var placeTwo = productLists[j]; 
+    var conflict = turf.booleanIntersects(placeOne, parcel2);
+    if (conflict) {
+      response = placeTwo.properties;
+      re.push(response);
+    }
+  }
 
-router.get('/', (req, res) => {
+});
+console.log(re);
   res.json({
-    message: 'APIok   okokokokkokoko - 👋🌎🌍🌏',
-    record: geof.features[0]
+    record: re
   });
 });
 
-router.use('/emojis', emojis);
 
 module.exports = router;
